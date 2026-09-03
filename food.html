@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Food Clicker Game</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    margin: 0; padding: 0;
+  }
+  h1 {
+    margin-top: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px #a83232;
+  }
+  #game {
+    position: relative;
+    width: 300px; height: 300px;
+    margin: 40px auto;
+    border: 4px solid #fff;
+    border-radius: 20px;
+    background: #fff;
+  }
+  .food {
+    position: absolute;
+    width: 80px; height: 80px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .food:hover {
+    transform: scale(1.2);
+  }
+  #score {
+    font-size: 24px;
+    color: #fff;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px #a83232;
+  }
+</style>
+</head>
+<body>
+<h1>Food Clicker Game</h1>
+<div id="game"></div>
+<div id="score">Score: 0</div>
+
+<script>
+  const foods = [
+    "🍕", "🍔", "🍟", "🌭", "🍣", "🍩", "🍪", "🍉"
+  ];
+  const game = document.getElementById('game');
+  const scoreDisplay = document.getElementById('score');
+  let score = 0;
+
+  function randomPosition() {
+    const x = Math.random() * (game.clientWidth - 80);
+    const y = Math.random() * (game.clientHeight - 80);
+    return { x, y };
+  }
+
+  function spawnFood() {
+    game.innerHTML = '';
+    const food = document.createElement('div');
+    food.className = 'food';
+    food.textContent = foods[Math.floor(Math.random() * foods.length)];
+    const pos = randomPosition();
+    food.style.left = pos.x + 'px';
+    food.style.top = pos.y + 'px';
+    food.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = 'Score: ' + score;
+      spawnFood();
+    });
+    game.appendChild(food);
+  }
+  
+  spawnFood();
+</script>
+</body>
+</html>
